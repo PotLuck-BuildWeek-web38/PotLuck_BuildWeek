@@ -55,20 +55,20 @@ public class ResourceServerConfig
             .permitAll()
             .antMatchers(HttpMethod.POST,
                 "/users/**")
-            .hasAnyRole("ADMIN")
+                .authenticated()
             .antMatchers(HttpMethod.DELETE,
                 "/users/**")
-            .hasAnyRole("ADMIN")
+                .authenticated()
             .antMatchers(HttpMethod.PUT,
                 "/users/**")
-            .hasAnyRole("ADMIN")
+                .authenticated()
             .antMatchers("/users/**",
                 "/useremails/**",
                 "/oauth/revoke-token",
                 "/logout")
             .authenticated()
             .antMatchers("/roles/**")
-            .hasAnyRole("ADMIN")
+                .authenticated()
             .anyRequest()
             .denyAll()
             .and()

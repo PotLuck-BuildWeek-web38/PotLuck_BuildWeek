@@ -32,7 +32,7 @@ public class Swagger2Config
         return new Docket(DocumentationType.SWAGGER_2)
             .select()
             .apis(RequestHandlerSelectors
-                .basePackage("com.lambdaschool.usermodel"))
+                .basePackage("com.lambdaschool.foundation"))
             .paths(PathSelectors.regex("/.*"))
             .build()
             .apiInfo(apiEndPointsInfo());
@@ -45,11 +45,11 @@ public class Swagger2Config
      */
     private ApiInfo apiEndPointsInfo()
     {
-        return new ApiInfoBuilder().title("User Model Example")
-            .description("User Model Example")
-            .contact(new Contact("John Mitchell",
-                "http://www.lambdaschool.com",
-                "john@lambdaschool.com"))
+        return new ApiInfoBuilder().title("PotLuck web38 TT11")
+            .description("PotLuck web38 TT11")
+            .contact(new Contact("trackteam 11",
+                "http://www.something.com",
+                "somtehing@something.something"))
             .license("MIT")
             .licenseUrl("https://github.com/LambdaSchool/java-usermodel/blob/master/LICENSE")
             .version("1.0.0")
