@@ -60,10 +60,14 @@ public class User
         allowSetters = true)
     private List<Useremail> useremails = new ArrayList<>();
 
-    /**
-     * Part of the join relationship between user and role
-     * connects users to the user role combination
-     */
+
+    @OneToMany(mappedBy = "guest",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    @JsonIgnoreProperties(value = "guest",
+            allowSetters = true)
+    private Set<PotluckUsers> potlucks = new HashSet<>();
+
     @OneToMany(mappedBy = "user",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
@@ -227,12 +231,16 @@ public class User
         this.roles = roles;
     }
 
-    /**
-     * Internally, user security requires a list of authorities, roles, that the user has. This method is a simple way to provide those.
-     * Note that SimpleGrantedAuthority requests the format ROLE_role name all in capital letters!
-     *
-     * @return The list of authorities, roles, this user object has
-     */
+    public Set<PotluckUsers> getPotlucks()
+    {
+        return potlucks;
+    }
+    public void setPotlucks(Set<PotluckUsers> potlucks)
+    {
+        this.potlucks = potlucks;
+    }
+
+
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()
     {
