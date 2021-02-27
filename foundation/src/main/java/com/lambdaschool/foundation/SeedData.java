@@ -65,8 +65,6 @@ public class SeedData
         roleService.deleteAll();
         potLuckService.deleteAll();
         Role r1 = new Role("role_user");
-
-
         r1 = roleService.save(r1);
 
 
@@ -74,51 +72,54 @@ public class SeedData
         User u1 = new User("admin",
             "password",
             "admin@lambdaschool.local");
-
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
         userService.save(u1);
         Potluck p1 = new Potluck("saturday night dinner",
-                "my house", "tomorrow", "anytimes", u1.getUsername());
+            "my house", "aftertomorow", "anytimes", u1.getUsername());
+        p1.getItems().add(new Item("strawberries","someone",false,p1));
+        p1.getItems().add(new Item("sage", "random guys",false,p1));
         potLuckService.save(p1);
 
-
-        // data, user
         User u2 = new User("cinnamon",
             "1234567",
             "cinnamon@lambdaschool.local");
         u2.getRoles()
-                .add(new UserRoles(u1,
-                        r1));
+            .add(new UserRoles(u1,
+                r1));
 
         userService.save(u2);
 
-        // user
         User u3 = new User("barnbarn",
             "ILuvM4th!",
             "barnbarn@lambdaschool.local");
         u3.getRoles()
-                .add(new UserRoles(u1,
-                        r1));
-        
+            .add(new UserRoles(u1,
+                r1));
+
         userService.save(u3);
 
         User u4 = new User("puttat",
             "password",
             "puttat@school.lambda");
         u4.getRoles()
-                .add(new UserRoles(u1,
-                        r1));
-        userService.save(u4);
+            .add(new UserRoles(u1,
+                r1));
 
+        userService.save(u4);
         User u5 = new User("misskitty",
             "password",
             "misskitty@school.lambda");
         u5.getRoles()
-                .add(new UserRoles(u1,
-                        r1));
+            .add(new UserRoles(u1,
+                r1));
         userService.save(u5);
+
+
+
+
+
 
         if (false)
         {

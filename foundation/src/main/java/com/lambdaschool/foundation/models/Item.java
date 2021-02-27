@@ -17,6 +17,10 @@ public class Item
     @Column(nullable = false)
     private String name;
 
+    private String guest;
+
+    @Column(nullable = false)
+    private Boolean picked;
 
     @ManyToOne
     @JoinColumn(name = "potluckid",
@@ -24,24 +28,21 @@ public class Item
     @JsonIgnoreProperties(value = "items", allowSetters = true)
     private Potluck potluck;
 
-    @ManyToOne
-    @JoinColumn(name = "userid",
-        nullable = false)
-    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
-    private User guest;
 
     public Item()
     {
     }
 
-
     public Item(
         String name,
-        User guest
-        )
+        String guest,
+        Boolean picked,
+        Potluck potluck)
     {
         this.name = name;
         this.guest = guest;
+        this.picked = picked;
+        this.potluck = potluck;
     }
 
     public long getItemid()
@@ -64,15 +65,30 @@ public class Item
         this.name = name;
     }
 
-    public User getGuest()
+    public String getGuest()
     {
         return guest;
     }
 
-    public void setGuest(User guest)
+    public void setGuest(String guest)
     {
         this.guest = guest;
     }
 
+    public Boolean getPicked() {
+        return picked;
+    }
+
+    public void setPicked(Boolean picked) {
+        this.picked = picked;
+    }
+
+    public Potluck getPotluck() {
+        return potluck;
+    }
+
+    public void setPotluck(Potluck potluck) {
+        this.potluck = potluck;
+    }
 
 }

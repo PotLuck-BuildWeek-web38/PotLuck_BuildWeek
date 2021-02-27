@@ -68,10 +68,16 @@ public class User
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "potluckid")
-    @JsonIgnoreProperties(value = "user", allowSetters = true)
-    private Potluck potluck;
+    /**
+     * Part of the join relationship between user and potluck
+     * connects users to the user potluck combination
+     */
+    @OneToMany(mappedBy = "user",
+        cascade = CascadeType.ALL,
+        orphanRemoval = true)
+    @JsonIgnoreProperties(value = "user",
+        allowSetters = true)
+    private Set<UserPotlucks> potlucks = new HashSet<>();
 
     /**
      * Default constructor used primarily by the JPA.
