@@ -3,10 +3,8 @@ package com.lambdaschool.foundation;
 import com.github.javafaker.Faker;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
-import com.lambdaschool.foundation.models.Role;
-import com.lambdaschool.foundation.models.User;
-import com.lambdaschool.foundation.models.UserRoles;
-import com.lambdaschool.foundation.models.Useremail;
+import com.lambdaschool.foundation.models.*;
+import com.lambdaschool.foundation.services.PotluckService;
 import com.lambdaschool.foundation.services.RoleService;
 import com.lambdaschool.foundation.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * SeedData puts both known and random data into the database. It implements CommandLineRunner.
@@ -45,6 +44,9 @@ public class SeedData
     @Autowired
     UserService userService;
 
+
+    @Autowired
+    PotluckService potLuckService;
     /**
      * Generates test, seed data for our application
      * First a set of known data is seeded into our database.
@@ -61,6 +63,7 @@ public class SeedData
     {
         userService.deleteAll();
         roleService.deleteAll();
+        potLuckService.deleteAll();
         Role r1 = new Role("role_user");
 
 
@@ -71,11 +74,14 @@ public class SeedData
         User u1 = new User("admin",
             "password",
             "admin@lambdaschool.local");
+        Potluck p1 = new Potluck("saturday night dinner",
+                "my house", "tomorrow", "anytimes", u1,null,null);
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
+        potLuckService.save(p1);
+        u1.getPotlucks().add(new PotluckUsers(u1,p1));
         userService.save(u1);
-
         // data, user
         User u2 = new User("cinnamon",
             "1234567",
