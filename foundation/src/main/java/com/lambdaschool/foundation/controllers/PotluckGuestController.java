@@ -4,15 +4,18 @@ import com.lambdaschool.foundation.models.Potluck;
 import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.services.GuestService;
 import com.lambdaschool.foundation.services.PotluckService;
+import io.swagger.models.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,14 +33,29 @@ public class PotluckGuestController
     @GetMapping(value = "/{potluckid}/guests")
     public ResponseEntity<?> findAllGuestsByPotluckId(@PathVariable long potluckid)
     {
-        Potluck currentPotluck = potluckService.findPotluckById(potluckid);
 
         List<User> guests = new ArrayList<>();
 
-        guests = currentPotluck.getGuests();
+        guests = guestService.findAllGuests(potluckid);
+
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
+    @PostMapping(value = "/{potluckid}/addguest/{userid}", consumes = {"application/json"})
+    public ResponseEntity<?> addGuestToPotluck(
+        @PathVariable long potluckid, @PathVariable long userid)
+    {
+        User guestAdded = guestService.addGuest(potluckid, userid);
 
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/{potluckid}/deleteguest/{userid}", consumes = {"application/json"})
+    public ResponseEntity<?> deleteGuestFromPotluck( @PathVariable long potluckid, @PathVariable long userid)
+    {
+        User guestRemoved = guestService.removeGuest(potluckid, userid);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
