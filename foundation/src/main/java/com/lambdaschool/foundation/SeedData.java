@@ -80,9 +80,9 @@ public class SeedData
                 r1));
         userService.save(u1);
         Potluck p1 = new Potluck("saturday night dinner",
-                "my house", "tomorrow", "anytimes", u1.getUsername(),null,null);
+                "my house", "tomorrow", "anytimes", u1.getUsername());
         potLuckService.save(p1);
-        u1.getPotlucks().add(new PotluckUsers(u1,p1));
+
 
         // data, user
         User u2 = new User("cinnamon",

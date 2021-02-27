@@ -17,40 +17,31 @@ public class Item
     @Column(nullable = false)
     private String name;
 
+
+    @ManyToOne
+    @JoinColumn(name = "potluckid",
+        nullable = false)
+    @JsonIgnoreProperties(value = "items", allowSetters = true)
+    private Potluck potluck;
+
     @ManyToOne
     @JoinColumn(name = "userid",
         nullable = false)
-    @JsonIgnoreProperties(value = "items", allowSetters = true)
+    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
     private User guest;
-
-    @OneToMany(mappedBy = "item",
-        cascade = CascadeType.ALL,
-        orphanRemoval = true)
-    @JsonIgnoreProperties(value = "item",
-        allowSetters = true)
-    private Set<PotluckItems> items = new HashSet<>();
-
 
     public Item()
     {
     }
 
-    public Item(
-        String name,
-        User guest)
-    {
-        this.name = name;
-        this.guest = guest;
-    }
 
     public Item(
         String name,
-        User guest,
-        Set<PotluckItems> items)
+        User guest
+        )
     {
         this.name = name;
         this.guest = guest;
-        this.items = items;
     }
 
     public long getItemid()
@@ -83,13 +74,5 @@ public class Item
         this.guest = guest;
     }
 
-    public Set<PotluckItems> getItems()
-    {
-        return items;
-    }
 
-    public void setItems(Set<PotluckItems> items)
-    {
-        this.items = items;
-    }
 }
