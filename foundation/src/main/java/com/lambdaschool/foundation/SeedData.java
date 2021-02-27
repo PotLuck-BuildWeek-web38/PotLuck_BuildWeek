@@ -74,14 +74,16 @@ public class SeedData
         User u1 = new User("admin",
             "password",
             "admin@lambdaschool.local");
-        Potluck p1 = new Potluck("saturday night dinner",
-                "my house", "tomorrow", "anytimes", u1,null,null);
+
         u1.getRoles()
             .add(new UserRoles(u1,
                 r1));
+        userService.save(u1);
+        Potluck p1 = new Potluck("saturday night dinner",
+                "my house", "tomorrow", "anytimes", u1.getUsername(),null,null);
         potLuckService.save(p1);
         u1.getPotlucks().add(new PotluckUsers(u1,p1));
-        userService.save(u1);
+
         // data, user
         User u2 = new User("cinnamon",
             "1234567",

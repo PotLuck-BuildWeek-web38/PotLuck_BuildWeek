@@ -2,10 +2,11 @@ package com.lambdaschool.foundation.services;
 
 import com.lambdaschool.foundation.models.Item;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+@Transactional
 @Service("itemService")
 public class ItemServiceImpl implements ItemService{
     @Override

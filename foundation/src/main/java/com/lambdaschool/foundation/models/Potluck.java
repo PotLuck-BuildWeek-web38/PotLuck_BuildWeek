@@ -33,11 +33,13 @@ public class Potluck extends Auditable
     @Column(nullable = false)
     private String time;
 
-    @ManyToOne
-    @JoinColumn(name = "userid",
-    nullable = false)
-    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
-    private User organizer;
+    @Column(nullable = false)
+    private String organizer;
+//    @ManyToOne
+//    @JoinColumn(name = "userid",
+//    nullable = false)
+//    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
+//    private User organizer;
 
     @OneToMany(mappedBy = "potluck",
     cascade = CascadeType.ALL,
@@ -56,13 +58,13 @@ public class Potluck extends Auditable
     }
 
     public Potluck(
-        String name,
-        String location,
-        String date,
-        String time,
-        User organizer,
-        Set<PotluckUsers> guests,
-        Set<PotluckItems> items)
+            String name,
+            String location,
+            String date,
+            String time,
+            String organizer,
+            Set<PotluckUsers> guests,
+            Set<PotluckItems> items)
     {
         this.name = name;
         this.location = location;
@@ -79,7 +81,7 @@ public class Potluck extends Auditable
         String location,
         String date,
         String time,
-        User organizer)
+        String organizer)
     {
         this.name = name;
         this.location = location;
@@ -87,6 +89,8 @@ public class Potluck extends Auditable
         this.time = time;
         this.organizer = organizer;
     }
+
+
 
     public long getPotluckid()
     {
@@ -139,12 +143,12 @@ public class Potluck extends Auditable
         this.time = time;
     }
 
-    public User getOrganizer()
+    public String getOrganizer()
     {
         return organizer;
     }
 
-    public void setOrganizer(User organizer)
+    public void setOrganizer(String organizer)
     {
         this.organizer = organizer;
     }
