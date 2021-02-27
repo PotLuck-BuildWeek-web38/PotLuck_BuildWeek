@@ -71,6 +71,7 @@ public class User
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+
     /**
      * Default constructor used primarily by the JPA.
      */
@@ -247,4 +248,6 @@ public class User
 
         return rtnList;
     }
+
+
 }
