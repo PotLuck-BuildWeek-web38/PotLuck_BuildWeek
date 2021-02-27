@@ -246,7 +246,13 @@ public class User
     {
         List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
 
-        rtnList.add(new SimpleGrantedAuthority("ROLE_USER"));
+        for (UserRoles r : this.roles)
+        {
+            String myRole = "ROLE_" + r.getRole()
+                .getName()
+                .toUpperCase();
+            rtnList.add(new SimpleGrantedAuthority(myRole));
+        }
 
         return rtnList;
     }
