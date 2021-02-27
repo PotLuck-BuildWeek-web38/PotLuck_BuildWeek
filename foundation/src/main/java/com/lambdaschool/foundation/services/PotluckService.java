@@ -1,7 +1,6 @@
 package com.lambdaschool.foundation.services;
 
 import com.lambdaschool.foundation.models.Potluck;
-import com.lambdaschool.foundation.models.User;
 
 import java.util.List;
 

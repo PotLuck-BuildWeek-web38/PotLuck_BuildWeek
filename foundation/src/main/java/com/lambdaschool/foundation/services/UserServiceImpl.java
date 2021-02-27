@@ -1,10 +1,7 @@
 package com.lambdaschool.foundation.services;
 
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
-import com.lambdaschool.foundation.models.Role;
-import com.lambdaschool.foundation.models.User;
-import com.lambdaschool.foundation.models.UserRoles;
-import com.lambdaschool.foundation.models.Useremail;
+import com.lambdaschool.foundation.models.*;
 import com.lambdaschool.foundation.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
@@ -29,6 +26,8 @@ public class UserServiceImpl
     @Autowired
     private UserRepository userrepos;
 
+    @Autowired
+    private PotluckService potluckService;
     /**
      * Connects this service to the Role table
      */
@@ -123,6 +122,11 @@ public class UserServiceImpl
                 .add(new Useremail(newUser,
                     ue.getUseremail()));
         }
+//        newUser.getPotlucks().clear();
+//        for(PotluckUsers p : user.getPotlucks()){
+//            Potluck addPot = potluckService.findPotluckById(p.getPotluck().getPotluckid());
+//            newUser.getPotlucks().add(new PotluckUsers(newUser, addPot));
+//        }
 
         return userrepos.save(newUser);
     }
