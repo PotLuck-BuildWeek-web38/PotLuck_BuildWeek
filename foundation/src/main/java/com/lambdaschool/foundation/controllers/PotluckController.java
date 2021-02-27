@@ -81,9 +81,9 @@ public class PotluckController
     @DeleteMapping(value = "/potluck/{potluckid}")
     public ResponseEntity<?> deletePotluckById(
         @PathVariable
-            long id)
+            long potluckid)
     {
-        potluckService.delete(id);
+        potluckService.delete(potluckid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
