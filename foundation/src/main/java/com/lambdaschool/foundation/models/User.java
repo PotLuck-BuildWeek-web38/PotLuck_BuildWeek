@@ -61,13 +61,6 @@ public class User
     private List<Useremail> useremails = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "guest",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true)
-    @JsonIgnoreProperties(value = "guest",
-            allowSetters = true)
-    private Set<PotluckUsers> potlucks = new HashSet<>();
-
     @OneToMany(mappedBy = "user",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
@@ -75,6 +68,10 @@ public class User
         allowSetters = true)
     private Set<UserRoles> roles = new HashSet<>();
 
+    @ManyToOne
+    @JoinColumn(name = "potluckid")
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    private Potluck potluck;
 
     /**
      * Default constructor used primarily by the JPA.
@@ -231,14 +228,6 @@ public class User
         this.roles = roles;
     }
 
-    public Set<PotluckUsers> getPotlucks()
-    {
-        return potlucks;
-    }
-    public void setPotlucks(Set<PotluckUsers> potlucks)
-    {
-        this.potlucks = potlucks;
-    }
 
 
     @JsonIgnore

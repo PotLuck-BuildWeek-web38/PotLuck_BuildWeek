@@ -3,13 +3,10 @@ package com.lambdaschool.foundation.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
-
-
-import static javax.persistence.TemporalType.*;
 
 @Entity
 @Table(name="potlucks")
@@ -35,37 +32,34 @@ public class Potluck extends Auditable
 
     @Column(nullable = false)
     private String organizer;
-//    @ManyToOne
-//    @JoinColumn(name = "userid",
-//    nullable = false)
-//    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
-//    private User organizer;
 
     @OneToMany(mappedBy = "potluck",
     cascade = CascadeType.ALL,
     orphanRemoval = true)
-    @JsonIgnoreProperties(value = "potluck", allowSetters = true)
-    private Set<PotluckUsers> guests = new HashSet<>();
+    @JsonIgnoreProperties(value = "potlucks", allowSetters = true)
+    private List<User> guests = new ArrayList<>();
 
     @OneToMany(mappedBy = "potluck",
         cascade = CascadeType.ALL,
         orphanRemoval = true)
     @JsonIgnoreProperties(value = "potluck", allowSetters = true)
-    private Set<PotluckItems> items = new HashSet<>();
+    private List <Item> items = new ArrayList<>();
 
     public Potluck()
     {
     }
 
     public Potluck(
-            String name,
-            String location,
-            String date,
-            String time,
-            String organizer,
-            Set<PotluckUsers> guests,
-            Set<PotluckItems> items)
+        long potluckid,
+        String name,
+        String location,
+        String date,
+        String time,
+        String organizer,
+        List<User> guests,
+        List<Item> items)
     {
+        this.potluckid = potluckid;
         this.name = name;
         this.location = location;
         this.date = date;
@@ -74,7 +68,6 @@ public class Potluck extends Auditable
         this.guests = guests;
         this.items = items;
     }
-
 
     public Potluck(
         String name,
@@ -153,22 +146,22 @@ public class Potluck extends Auditable
         this.organizer = organizer;
     }
 
-    public Set<PotluckUsers> getGuests()
+    public List<User> getGuests()
     {
         return guests;
     }
 
-    public void setGuests(Set<PotluckUsers> guests)
+    public void setGuests(List<User> guests)
     {
         this.guests = guests;
     }
 
-    public Set<PotluckItems> getItems()
+    public List<Item> getItems()
     {
         return items;
     }
 
-    public void setItems(Set<PotluckItems> items)
+    public void setItems(List<Item> items)
     {
         this.items = items;
     }
