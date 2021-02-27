@@ -25,13 +25,13 @@ public class Potluck extends Auditable
     @Column(nullable = false)
     private String location;
 
-    @Temporal(DATE)
+//   Figure out right data type later, use as string temporarily
     @Column(nullable = false)
-    private Date date;
+    private String date;
 
-    @Temporal(TIME)
+  // Figure out right data type later, use as string temporarily
     @Column(nullable = false)
-    private Time time;
+    private String time;
 
     @ManyToOne
     @JoinColumn(name = "userid",
@@ -56,16 +56,14 @@ public class Potluck extends Auditable
     }
 
     public Potluck(
-        long potluckid,
         String name,
         String location,
-        Date date,
-        Time time,
+        String date,
+        String time,
         User organizer,
         Set<PotluckUsers> guests,
         Set<PotluckItems> items)
     {
-        this.potluckid = potluckid;
         this.name = name;
         this.location = location;
         this.date = date;
@@ -75,15 +73,14 @@ public class Potluck extends Auditable
         this.items = items;
     }
 
+
     public Potluck(
-        long potluckid,
         String name,
         String location,
-        Date date,
-        Time time,
+        String date,
+        String time,
         User organizer)
     {
-        this.potluckid = potluckid;
         this.name = name;
         this.location = location;
         this.date = date;
@@ -121,22 +118,23 @@ public class Potluck extends Auditable
         this.location = location;
     }
 
-    public Date getDate()
+
+    public String getDate()
     {
         return date;
     }
 
-    public void setDate(Date date)
+    public void setDate(String date)
     {
         this.date = date;
     }
 
-    public Time getTime()
+    public String getTime()
     {
         return time;
     }
 
-    public void setTime(Time time)
+    public void setTime(String time)
     {
         this.time = time;
     }
