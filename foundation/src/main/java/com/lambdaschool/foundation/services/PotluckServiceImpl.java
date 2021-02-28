@@ -64,40 +64,21 @@ public class PotluckServiceImpl implements PotluckService
             newPotluck.setDate(potluck.getDate());
             newPotluck.setTime(potluck.getTime());
             newPotluck.setLocation(potluck.getLocation());
-
-//            User newOrganizer = userrepos.findById(potluck.getOrganizer().getUsername())
-//                    .orElseThrow(() -> new ResourceNotFoundException(("Organizer id " + potluck.getOrganizer()
-//                            .getUsername() + " not found!")));
             newPotluck.setOrganizer(potluck.getOrganizer());
 
-//            newPotluck.getGuests()
+//            newPotluck.getUsers()
 //                    .clear();
-//            for (PotluckUsers pg : potluck.getGuests()) {
-//                if (potluck.getGuests().size() > 0) {
-//                    User newGuest = userrepos.findById(pg.getGuest()
-//                            .getUserid())
-//                            .orElseThrow(() -> new ResourceNotFoundException("User/Guest id " + pg.getGuest()
-//                                    .getUserid() + " not found!"));
-//
-//                    newPotluck.getGuests()
-//                            .add(new PotluckUsers(newGuest,
-//                                    newPotluck));
-//                }
+//            for (User g : potluck.getUsers())
+//            {
+//                newPotluck.getGuests().add(g);
 //            }
-//
-//            newPotluck.getItems()
-//                    .clear();
-//            for (PotluckItems pi : potluck.getItems()) {
-//                if (potluck.getItems().size() > 0) {
-//                    Item newItem = itemrepos.findById(pi.getItem()
-//                            .getItemid())
-//                            .orElseThrow(() -> new ResourceNotFoundException("Item id " + pi.getItem()
-//                                    .getItemid() + " not found!"));
-//                    newPotluck.getItems()
-//                            .add(new PotluckItems(newItem,
-//                                    newPotluck));
-//                }
-//            }
+           newPotluck.getItems()
+                    .clear();
+            for (Item pi : potluck.getItems()) {
+                if (potluck.getItems().size() > 0) {
+                    newPotluck.getItems().add(new Item(pi.getName(), pi.getGuest(), pi.getPicked(), newPotluck));
+                }
+            }
 
             return potluckrepos.save(newPotluck);
 

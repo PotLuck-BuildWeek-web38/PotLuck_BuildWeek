@@ -29,8 +29,8 @@ public class GuestServiceImpl implements GuestService
     {
         Potluck currentPotluck = potluckrepos.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(("Potluck id " + id + " Not Found")));
-        List<User> guests = currentPotluck.getGuests();
-        return guests;
+        //List<User> guests = currentPotluck.getGuests();
+        return null;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class GuestServiceImpl implements GuestService
             .orElseThrow(() -> new ResourceNotFoundException(("Potluck id " + potluckid + " Not Found")));
         User guestToAdd = userrepos.findById(userid)
             .orElseThrow(() -> new ResourceNotFoundException(("User id " + userid + " Not Found")));
-        currentPotluck.getGuests().add(guestToAdd);
+        //currentPotluck.getGuests().add(guestToAdd);
         potluckrepos.save(currentPotluck);
         return guestToAdd;
     }
@@ -56,16 +56,17 @@ public class GuestServiceImpl implements GuestService
             .orElseThrow(() -> new ResourceNotFoundException(("Potluck id " + potluckid + " Not Found")));
         User guestToRemove = userrepos.findById(userid)
             .orElseThrow(() -> new ResourceNotFoundException(("User id " + userid + " Not Found")));
-        List<User> guests = currentPotluck.getGuests();
-        List<User> updatedGuests = new ArrayList<>();
-        for (User g : guests)
-        {
-            if(g.getUserid() != userid)
-            {
-                updatedGuests.add(g);
-            }
-        }
-        currentPotluck.setGuests(updatedGuests);
+        //List<User> guests = currentPotluck.getGuests();
+//        List<User> updatedGuests = new ArrayList<>();
+//        for (User g : guests)
+//        {
+//           if (g.getUsername() != guestToRemove.getUsername())
+//           {
+//               updatedGuests.add(g);
+//           }
+//
+//        }
+//        currentPotluck.setGuests(updatedGuests);
         potluckrepos.save(currentPotluck);
 
         return guestToRemove;
