@@ -31,35 +31,35 @@ public class ItemController {
                 HttpStatus.OK);
     }
 
-    @GetMapping(value = "/item/{itemId}",
+    @GetMapping(value = "/item/{itemid}",
             produces = "application/json")
     public ResponseEntity<?> getItemById(
             @PathVariable
-                    Long itemId)
+                    Long itemid)
     {
-        Item r = itemService.findById(itemId);
+        Item r = itemService.findById(itemid);
         return new ResponseEntity<>(r,
                 HttpStatus.OK);
     }
 
 
-    @PatchMapping(value = "/updateitem/{potluckid}",
+    @PatchMapping(value = "/updateitem/{itemid}",
             consumes = "application/json",produces = "application/json")
     public ResponseEntity<?> updateItem( @Valid
-          @RequestBody Item updateItem, @PathVariable  long potluckid)
+          @RequestBody Item updateItem, @PathVariable  long itemid)
     {
-        updateItem.setItemid(potluckid);
-        itemService.update(potluckid,updateItem);
+        updateItem.setItemid(itemid);
+        itemService.update(itemid,updateItem);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
-    @DeleteMapping("/item/{id}")
+    @DeleteMapping("/item/{itemid}")
     public ResponseEntity<?> deleteItemById(
             @PathVariable
-                    long id)
+                    long itemid)
     {
-        itemService.delete(id);
+        itemService.delete(itemid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
