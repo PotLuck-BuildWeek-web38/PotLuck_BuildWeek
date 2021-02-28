@@ -23,7 +23,7 @@ public class UserPotlucks
     @ManyToOne
     @JoinColumn(name = "potluckid")
     @JsonIgnoreProperties("users")
-    private User user;
+    private Potluck potluck;
 
     /**
      * Foreign key into the user table
@@ -32,7 +32,7 @@ public class UserPotlucks
     @ManyToOne
     @JoinColumn(name = "userid")
     @JsonIgnoreProperties("potlucks")
-    private Potluck potluck;
+    private User user;
 
     public UserPotlucks()
     {

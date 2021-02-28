@@ -114,6 +114,16 @@ public class UserServiceImpl
                     addRole));
         }
 
+        newUser.getPotlucks()
+            .clear();
+        for (UserPotlucks up : user.getPotlucks())
+        {
+            Potluck addPotluck = potluckService.findPotluckById(up.getPotluck()
+                .getPotluckid());
+            newUser.getPotlucks()
+                .add(new UserPotlucks(addPotluck,
+                    newUser));
+        }
         newUser.getUseremails()
             .clear();
         for (Useremail ue : user.getUseremails())
@@ -122,11 +132,6 @@ public class UserServiceImpl
                 .add(new Useremail(newUser,
                     ue.getUseremail()));
         }
-//        newUser.getPotlucks().clear();
-//        for(PotluckUsers p : user.getPotlucks()){
-//            Potluck addPot = potluckService.findPotluckById(p.getPotluck().getPotluckid());
-//            newUser.getPotlucks().add(new PotluckUsers(newUser, addPot));
-//        }
 
         return userrepos.save(newUser);
     }
