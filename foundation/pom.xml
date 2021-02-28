@@ -112,7 +112,7 @@
     </dependencies>
 
     <build>
-        <finalName>jrmmba-foundation</finalName>
+        <finalName>potluck-tt11</finalName>
 
         <plugins>
             <plugin>
