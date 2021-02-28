@@ -25,7 +25,7 @@ public class Item
     @ManyToOne
     @JoinColumn(name = "potluckid",
         nullable = false)
-    @JsonIgnoreProperties(value = "items", allowSetters = true)
+    @JsonIgnoreProperties(value = {"items","location","date","time","organizer","users"}, allowSetters = true)
     private Potluck potluck;
 
 

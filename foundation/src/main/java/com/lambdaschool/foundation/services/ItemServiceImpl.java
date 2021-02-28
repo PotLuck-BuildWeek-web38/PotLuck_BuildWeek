@@ -43,69 +43,36 @@ public class ItemServiceImpl implements ItemService{
         return itemrepos.findById(id).orElseThrow(() -> new ResourceNotFoundException("Item id " + id + " not found!"));
     }
 
-//    @Override
-//    public User addGuest(
-//            long potluckid,
-//            long userid)
-//    {
-//        Potluck currentPotluck = potluckrepos.findById(potluckid)
-//                .orElseThrow(() -> new ResourceNotFoundException(("Potluck id " + potluckid + " Not Found")));
-//        User guestToAdd = userrepos.findById(userid)
-//                .orElseThrow(() -> new ResourceNotFoundException(("User id " + userid + " Not Found")));
-//        //currentPotluck.getGuests().add(guestToAdd);
-//        potluckrepos.save(currentPotluck);
-//        return guestToAdd;
-//    }
-
 
     @Override
     public void delete(long id) {
-
+        if (itemrepos.findById(id).isPresent()) {
+            itemrepos.deleteById(id);
+        }else{
+            throw new ResourceNotFoundException("Item id " + id + " not found!");
+        }
     }
     @Transactional
     @Override
-    public Item save(Item item) {
-//
-//        Potluck curPotLuck = potluckrepos.findById(potluckid).orElseThrow(() -> new ResourceNotFoundException(("Potluck id: " + potluckid + " Not Found")));
-//
-//        Item newItem = itemrepos.findById(itemid)
-//                .orElseThrow(() -> new ResourceNotFoundException(("Item id : " + itemid + " Not Found")));
-//        curPotLuck.getItems().add(newItem);
-//        potluckrepos.save(curPotLuck);
-//        return newItem;
-
-        Item newItem = new Item();
-
-        if(item.getItemid() != 0){
-            itemrepos.findById(item.getItemid())
-                    .orElseThrow(() -> new ResourceNotFoundException("Item id " + item.getItemid() + " not found!"));
-            newItem.setItemid(item.getItemid());
-        }
-        newItem.setName(item.getName());
-        newItem.setGuest(item.getGuest());
-        newItem.setPicked(item.getPicked());
-
-        return itemrepos.save(newItem);
-    }
-
-    @Override
     public Item update(long itemid, Item item) {
-        return null;
+       Item currentItem = itemrepos.findById(itemid)
+               .orElseThrow(() -> new ResourceNotFoundException("Item " + itemid + " not found"));
+        if (item.getName() != null)
+        {
+            currentItem.setName(item.getName());
+        }
+
+        if (item.getGuest() != null)
+        {
+            currentItem.setGuest(item.getGuest());
+        }
+
+        if (item.getPicked() != null)
+        {
+            currentItem.setPicked(item.getPicked());
+        }
+       return itemrepos.save(currentItem);
     }
 
-//    @Override
-//    public Item update(long itemid, Item item) {
-//
-//        if (item.getName() == null)
-//        {
-//            throw new ResourceNotFoundException("No item name found to update!");
-//        }
-//        Item newItem = findById(itemid); // see if id exists
-//
-//        itemrepos.updateItemName(userAuditing.getCurrentAuditor()
-//                        .get(),
-//                itemid,
-//                item.getName());
-//        return findById(itemid);
-//    }
+
 }
