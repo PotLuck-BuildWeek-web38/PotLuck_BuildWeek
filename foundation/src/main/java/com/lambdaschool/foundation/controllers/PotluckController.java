@@ -39,12 +39,12 @@ public class PotluckController
 
     // Create a new potluck
     @PostMapping(value = "/potluck",
-        consumes = {"application/json"})
+            consumes = {"application/json"}, produces ={"application/json"})
     public ResponseEntity<?> addPotluck(
-        @Valid
-        @RequestBody
-            Potluck newpotluck) throws
-                                URISyntaxException
+            @Valid
+            @RequestBody
+                    Potluck newpotluck) throws
+            URISyntaxException
     {
         newpotluck.setPotluckid(0);
         newpotluck = potluckService.save(newpotluck);
@@ -52,14 +52,14 @@ public class PotluckController
         // set the location header for the newly created resource
         HttpHeaders responseHeaders = new HttpHeaders();
         URI newPotluckURI = ServletUriComponentsBuilder.fromCurrentRequest()
-            .path("/{potluckid}")
-            .buildAndExpand(newpotluck.getPotluckid())
-            .toUri();
+                .path("/{potluckid}")
+                .buildAndExpand(newpotluck.getPotluckid())
+                .toUri();
         responseHeaders.setLocation(newPotluckURI);
 
         return new ResponseEntity<>(null,
-            responseHeaders,
-            HttpStatus.CREATED);
+                responseHeaders,
+                HttpStatus.CREATED);
     }
 
     // update a complete potluck object
