@@ -98,7 +98,7 @@ public class PotluckServiceImpl implements PotluckService
             long id)
     {
         Potluck currentPotluck = potluckrepos.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Restaurant " + id + " not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("potluck " + id + " not found"));
 
         if (potluck.getName() != null)
         {

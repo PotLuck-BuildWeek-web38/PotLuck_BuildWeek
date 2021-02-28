@@ -9,9 +9,9 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lambdaschool</groupId>
-    <artifactId>foundation</artifactId>
+    <artifactId>potluck</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>usermodel</name>
+    <name>potluck</name>
     <description>Scaffolding App for Lambda School Build Week</description>
 
     <properties>
