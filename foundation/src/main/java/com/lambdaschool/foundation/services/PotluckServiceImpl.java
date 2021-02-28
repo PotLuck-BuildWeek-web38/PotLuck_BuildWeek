@@ -26,6 +26,9 @@ public class PotluckServiceImpl implements PotluckService
     @Autowired
     private ItemRepository itemrepos;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public List<Potluck> findAll()
     {
@@ -66,12 +69,16 @@ public class PotluckServiceImpl implements PotluckService
             newPotluck.setLocation(potluck.getLocation());
             newPotluck.setOrganizer(potluck.getOrganizer());
 
-//            newPotluck.getUsers()
-//                    .clear();
-//            for (User g : potluck.getUsers())
-//            {
-//                newPotluck.getGuests().add(g);
-//            }
+            newPotluck.getUsers()
+                .clear();
+            for (UserPotlucks up : potluck.getUsers())
+            {
+                User addUser = userService.findUserById(up.getUser()
+                    .getUserid());
+                newPotluck.getUsers()
+                    .add(new UserPotlucks(newPotluck,
+                        addUser));
+            }
            newPotluck.getItems()
                     .clear();
             for (Item pi : potluck.getItems()) {

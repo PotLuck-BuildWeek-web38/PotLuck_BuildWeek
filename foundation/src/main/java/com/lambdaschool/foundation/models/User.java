@@ -234,7 +234,15 @@ public class User
         this.roles = roles;
     }
 
+    public Set<UserPotlucks> getPotlucks()
+    {
+        return potlucks;
+    }
 
+    public void setPotlucks(Set<UserPotlucks> potlucks)
+    {
+        this.potlucks = potlucks;
+    }
 
     @JsonIgnore
     public List<SimpleGrantedAuthority> getAuthority()

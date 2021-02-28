@@ -185,4 +185,5 @@ public class Potluck extends Auditable
     {
         this.users = users;
     }
+
 }
