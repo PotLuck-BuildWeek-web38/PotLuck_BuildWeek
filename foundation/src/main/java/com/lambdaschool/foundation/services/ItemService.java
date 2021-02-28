@@ -8,7 +8,7 @@ public interface ItemService {
 
     List<Item> findAll();
 
-    Item findItemById(long id);
+    Item findById(long id);
 
     void delete(long id);
 

@@ -91,7 +91,69 @@ public class PotluckServiceImpl implements PotluckService
 
         }
     }
+    @Transactional
+    @Override
+    public Potluck update(
+            Potluck potluck,
+            long id)
+    {
+        Potluck currentPotluck = potluckrepos.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Restaurant " + id + " not found"));
 
+        if (potluck.getName() != null)
+        {
+            currentPotluck.setName(potluck.getName());
+        }
+
+        if (potluck.getLocation() != null)
+        {
+            currentPotluck.setLocation(potluck.getLocation());
+        }
+
+        if (potluck.getDate() != null)
+        {
+            currentPotluck.setDate(potluck.getDate());
+        }
+
+        if (potluck.getTime() != null)
+        {
+            currentPotluck.setTime(potluck.getTime());
+        }
+
+        if (potluck.getOrganizer() != null)
+        {
+            currentPotluck.setOrganizer(potluck.getOrganizer());
+        }
+
+        if (potluck.getUsers()
+                .size() > 0) {
+            for (UserPotlucks up : potluck.getUsers()) {
+                User addUser = userService.findUserById(up.getUser()
+                        .getUserid());
+                currentPotluck.getUsers()
+                        .add(new UserPotlucks(currentPotluck,
+                                addUser));
+            }
+        }
+
+        System.out.println("*** " + potluck.getItems()
+                .size());
+        System.out.println(potluck.getItems());
+
+        if (potluck.getItems()
+                .size() > 0)
+        {
+            currentPotluck.getItems()
+                    .clear();
+            for (Item i : potluck.getItems())
+            {
+                currentPotluck.getItems()
+                        .add(new Item(i.getName(),i.getGuest(),false,currentPotluck));
+            }
+        }
+
+        return potluckrepos.save(currentPotluck);
+    }
     @Override
     public void delete(long id) {
 

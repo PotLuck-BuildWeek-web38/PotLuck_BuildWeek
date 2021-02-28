@@ -15,4 +15,6 @@ public interface PotluckService
     void delete(long id);
 
     public void deleteAll();
+
+    Potluck update(Potluck potluck,long id);
 }
