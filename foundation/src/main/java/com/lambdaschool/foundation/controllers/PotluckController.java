@@ -63,8 +63,8 @@ public class PotluckController
     }
 
     // update a complete potluck object
-    @PutMapping(value = "/potluck/{potluckid}",
-        consumes = {"application/json"})
+    @PatchMapping (value = "/potluck/{potluckid}",
+        consumes = {"application/json"}, produces ={"application/json"})
     public ResponseEntity<?> updateFullPotluck(
         @Valid
         @RequestBody
@@ -73,7 +73,7 @@ public class PotluckController
             long potluckid)
     {
         updatePotluck.setPotluckid(potluckid);
-        potluckService.save(updatePotluck);
+        potluckService.update(updatePotluck, potluckid);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

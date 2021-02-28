@@ -143,8 +143,7 @@ public class PotluckServiceImpl implements PotluckService
         if (potluck.getItems()
                 .size() > 0)
         {
-            currentPotluck.getItems()
-                    .clear();
+
             for (Item i : potluck.getItems())
             {
                 currentPotluck.getItems()

@@ -31,7 +31,7 @@ public class UserPotlucks
     @Id
     @ManyToOne
     @JoinColumn(name = "userid")
-    @JsonIgnoreProperties("potlucks")
+    @JsonIgnoreProperties(value={"potlucks", "roles","useremails"})
     private User user;
 
     public UserPotlucks()
