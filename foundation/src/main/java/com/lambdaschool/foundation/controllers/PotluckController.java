@@ -63,7 +63,7 @@ public class PotluckController
     }
 
     // update a complete potluck object
-    @PatchMapping (value = "/potluck/{potluckid}",
+    @PutMapping (value = "/potluck/{potluckid}",
         consumes = {"application/json"}, produces ={"application/json"})
     public ResponseEntity<?> updateFullPotluck(
         @Valid
