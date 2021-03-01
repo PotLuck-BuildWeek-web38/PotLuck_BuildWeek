@@ -1,3 +1,9 @@
+# TT-11 Build Week Potluck Planner Backend
+
+## Product Vision Document
+(https://docs.google.com/document/d/1DCGuLsotxPdyNGceSYBbgDln6C-kpzDF26W8buN4VhM/edit?usp=sharing)
+
+
 # Foundation / Scaffolding for Build Week
 
 ## Introduction
