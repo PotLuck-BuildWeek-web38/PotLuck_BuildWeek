@@ -50,6 +50,7 @@ public class PotluckServiceImpl implements PotluckService
 
     }
 
+    @Transactional
     @Override
     public Potluck save(Potluck potluck) {
         {
@@ -153,13 +154,19 @@ public class PotluckServiceImpl implements PotluckService
 
         return potluckrepos.save(currentPotluck);
     }
+
+    @Transactional
     @Override
     public void delete(long id) {
-
+        potluckrepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Potluck id " + id + " not found!"));
+        potluckrepos.deleteById(id);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public void deleteAll() {
-
+    public void deleteAll()
+    {
+        potluckrepos.deleteAll();
     }
 }

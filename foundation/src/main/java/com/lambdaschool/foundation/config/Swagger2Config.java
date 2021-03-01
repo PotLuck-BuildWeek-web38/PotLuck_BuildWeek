@@ -47,11 +47,11 @@ public class Swagger2Config
     {
         return new ApiInfoBuilder().title("PotLuck web38 TT11")
             .description("PotLuck web38 TT11")
-            .contact(new Contact("trackteam 11",
-                "http://www.something.com",
-                "somtehing@something.something"))
+            .contact(new Contact("trackteam 11 Gatien/Gina",
+                "https://potluck-tt11.herokuapp.com/",
+                "gina-russell@lamdbastudents.com"))
             .license("MIT")
-            .licenseUrl("https://github.com/LambdaSchool/java-usermodel/blob/master/LICENSE")
+            .licenseUrl("https://github.com/PotLuck-BuildWeek-web38/PotLuck_BuildWeek/blob/Main/LICENSE")
             .version("1.0.0")
             .build();
     }
