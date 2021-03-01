@@ -18,7 +18,7 @@ public class DataSourceConfig
     /**
      * The property from application properties. Defaults to H2
      */
-    @Value("${local.run.db:h2}")
+    @Value("${local.db.run:h2}")
     private String dbValue;
 
     /**
@@ -32,30 +32,30 @@ public class DataSourceConfig
      *
      * @return the datasource to use
      */
-//    @Bean
-//    public DataSource dataSource()
-//    {
-//        if (dbValue.equalsIgnoreCase("POSTGRESQL"))
-//        {
-//            // Assume Heroku
-//            HikariConfig config = new HikariConfig();
-//            config.setDriverClassName("org.postgresql.Driver");
-//            config.setJdbcUrl(dbURL);
-//            return new HikariDataSource(config);
-//        } else
-//        {
-//            // Assume H2
-//            String myURLString = "jdbc:h2:mem:testdb";
-//            String myDriverClass = "org.h2.Driver";
-//            String myDBUser = "sa";
-//            String myDBPassword = "";
-//
-//            return DataSourceBuilder.create()
-//                .username(myDBUser)
-//                .password(myDBPassword)
-//                .url(myURLString)
-//                .driverClassName(myDriverClass)
-//                .build();
-//        }
-//    }
+    @Bean
+    public DataSource dataSource()
+    {
+        if (dbValue.equalsIgnoreCase("POSTGRESQL"))
+        {
+            // Assume Heroku
+            HikariConfig config = new HikariConfig();
+            config.setDriverClassName("org.postgresql.Driver");
+            config.setJdbcUrl(dbURL);
+            return new HikariDataSource(config);
+        } else
+        {
+            // Assume H2
+            String myURLString = "jdbc:h2:mem:testdb";
+            String myDriverClass = "org.h2.Driver";
+            String myDBUser = "sa";
+            String myDBPassword = "";
+
+            return DataSourceBuilder.create()
+                .username(myDBUser)
+                .password(myDBPassword)
+                .url(myURLString)
+                .driverClassName(myDriverClass)
+                .build();
+        }
+    }
 }
