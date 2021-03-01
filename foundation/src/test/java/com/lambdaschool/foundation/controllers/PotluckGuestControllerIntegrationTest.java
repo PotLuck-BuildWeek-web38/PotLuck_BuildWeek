@@ -110,8 +110,6 @@ public class PotluckGuestControllerIntegrationTest
     {
        String jsonInput = "";
         mockMvc.perform(MockMvcRequestBuilders.post("/potlucks/potluck/11/addguest/19")
-            .content(jsonInput)
-            .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
             .andDo(print())
             .andExpect(status().is2xxSuccessful());

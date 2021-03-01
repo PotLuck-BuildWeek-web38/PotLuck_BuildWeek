@@ -31,7 +31,7 @@ public class PotluckGuestController
         return new ResponseEntity<>(guests, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/{potluckid}/addguest/{userid}", consumes = {"application/json"})
+    @PostMapping(value = "/{potluckid}/addguest/{userid}")
     public ResponseEntity<?> addGuestToPotluck(
         @PathVariable long potluckid, @PathVariable long userid)
     {

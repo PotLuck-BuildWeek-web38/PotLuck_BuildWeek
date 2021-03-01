@@ -212,8 +212,7 @@ public class PotluckGuestControllerUnitTestNoDB
             .thenReturn(guestList.get(0));
 
         RequestBuilder rb = MockMvcRequestBuilders.post(apiUrl)
-            .accept(MediaType.APPLICATION_JSON)
-            .contentType(MediaType.APPLICATION_JSON);
+            .accept(MediaType.APPLICATION_JSON);
         mockMvc.perform(rb)
             .andExpect(status().is2xxSuccessful())
             .andDo(MockMvcResultHandlers.print());
