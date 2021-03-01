@@ -5,12 +5,16 @@ import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.models.*;
 import com.lambdaschool.foundation.repository.ItemRepository;
 import com.lambdaschool.foundation.repository.PotluckRepository;
+import io.restassured.mapper.ObjectMapper;
+import io.restassured.mapper.ObjectMapperDeserializationContext;
+import io.restassured.mapper.ObjectMapperSerializationContext;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,9 +24,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import static org.mockito.ArgumentMatchers.any;
 
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = FoundationApplicationTesting.class,
         properties = {
@@ -32,6 +39,9 @@ public class ItemServiceImplTest {
 
     @Autowired
     private ItemService itemService;
+
+    @MockBean
+    private HelperFunctions helperFunctions;
 
     @MockBean
     private ItemRepository itemrepos;
@@ -164,6 +174,24 @@ public class ItemServiceImplTest {
     }
 
     @Test
-    public void update() {
+    public void update() throws Exception{
+        String name = "pizza pineapple";
+        User u1 = new User("admin",
+                "password",
+                "admin@lambdaschool.local");
+        Potluck p1 = new Potluck("Saturday Game Night",
+                "My house", "March 20", "7 PM", u1.getUsername());
+
+        Item i1 = new Item(name,"someone",false,p1);
+
+        Mockito.when(itemrepos.findById(55L)).thenReturn(Optional.of(itemList.get(2)));
+
+        Mockito.when(itemrepos.save(any(Item.class))).thenReturn(i1);
+
+        Mockito.when(helperFunctions.isAuthorizedToMakeChange(anyString()))
+                .thenReturn(true);
+        Item newItem = itemService.update(55L, i1);
+
+        assertEquals(name, newItem.getName());
+        }
     }
-}
