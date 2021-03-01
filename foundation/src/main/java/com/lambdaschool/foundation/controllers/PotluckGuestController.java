@@ -40,7 +40,7 @@ public class PotluckGuestController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{potluckid}/removeguest/{userid}", consumes = {"application/json"})
+    @DeleteMapping(value = "/{potluckid}/removeguest/{userid}")
     public ResponseEntity<?> removeGuestFromPotluck( @PathVariable long potluckid, @PathVariable long userid)
     {
         User guestRemoved = guestService.removeGuest(potluckid, userid);
