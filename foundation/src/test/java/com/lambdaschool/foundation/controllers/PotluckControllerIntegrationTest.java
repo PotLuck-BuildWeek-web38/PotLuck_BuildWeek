@@ -148,7 +148,7 @@ public class PotluckControllerIntegrationTest
     @Test
     public void deletePotluckById()
     {
-        long aPotluckId = 2;
+        long aPotluckId = 5;
         given().when()
             .delete("/potlucks/potluck/" + aPotluckId)
             .then()
