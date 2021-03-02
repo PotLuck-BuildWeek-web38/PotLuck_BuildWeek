@@ -2,6 +2,7 @@ package com.lambdaschool.foundation.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lambdaschool.foundation.FoundationApplicationTesting;
+import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.models.*;
 import com.lambdaschool.foundation.repository.ItemRepository;
 import com.lambdaschool.foundation.repository.PotluckRepository;
@@ -187,6 +188,14 @@ public class PotluckServiceImplUnitTestNoDB
         assertEquals("Saturday Game Night", potluckService.findPotluckById(101).getName());
     }
 
+    @Test (expected = ResourceNotFoundException.class)
+    public void findPotluckByIdNotFound()
+    {
+        Mockito.when(potluckrepos.findById(any(Long.class)))
+            .thenReturn(Optional.empty());
+
+        assertEquals("Saturday Game Night", potluckService.findPotluckById(101).getName());
+    }
     @Test
     public void save()
     {
@@ -197,21 +206,116 @@ public class PotluckServiceImplUnitTestNoDB
         newPotluck.setTime("2 PM");
         newPotluck.setLocation("Malibu Jacks");
         newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
 
-        Mockito.when(potluckrepos.save(any(Potluck.class)))
-            .thenReturn(newPotluck);
+        Mockito.when(potluckrepos.findById(any(Long.class)))
+            .thenReturn(Optional.of(potluckList.get(0)));
 
         Mockito.when(userService.findUserById(any(Long.class)))
             .thenReturn(guestList.get(0));
 
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
         Potluck addedPotluck = potluckService.save(newPotluck);
         assertEquals(newPotluck.getName(), addedPotluck.getName());
 
+    }
+
+    @Test (expected = ResourceNotFoundException.class)
+    public void saveNotFound()
+    {
+        String potluckName = "Birthday Party";
+        Potluck newPotluck = new Potluck();
+        newPotluck.setName(potluckName);
+        newPotluck.setDate("March 14th");
+        newPotluck.setTime("2 PM");
+        newPotluck.setLocation("Malibu Jacks");
+        newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
+        newPotluck.setPotluckid(999L);
+
+        Mockito.when(potluckrepos.findById(999L))
+            .thenReturn(Optional.empty());
+
+        Mockito.when(userService.findUserById(any(Long.class)))
+            .thenReturn(guestList.get(0));
+
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
+        Potluck addedPotluck = potluckService.save(newPotluck);
+        assertEquals(newPotluck.getName(), addedPotluck.getName());
+
+    }
+
+    @Test
+    public void savePutFound()
+    {
+        String potluckName = "Birthday Party";
+        Potluck newPotluck = new Potluck();
+        newPotluck.setName(potluckName);
+        newPotluck.setDate("March 14th");
+        newPotluck.setTime("2 PM");
+        newPotluck.setLocation("Malibu Jacks");
+        newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
+        newPotluck.setPotluckid(999L);
+
+        Mockito.when(potluckrepos.findById(999L))
+            .thenReturn(Optional.of(potluckList.get(0)));
+
+        Mockito.when(userService.findUserById(any(Long.class)))
+            .thenReturn(guestList.get(0));
+
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
+        Potluck addedPotluck = potluckService.save(newPotluck);
+        assertEquals(newPotluck.getName(), addedPotluck.getName());
 
     }
 
     @Test
     public void update() throws Exception
+    {
+        String potluckName = "Birthday Party";
+        Potluck newPotluck = new Potluck();
+        newPotluck.setName(potluckName);
+        newPotluck.setDate("March 14th");
+        newPotluck.setTime("2 PM");
+        newPotluck.setLocation("Malibu Jacks");
+        newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
+
+
+        // I need a copy of newPotluck to send to update so the original newPotluck is not changed.
+        // I am using Jackson to make a clone of the object
+        ObjectMapper objectMapper = new ObjectMapper();
+        Potluck copyPotluck = objectMapper
+            .readValue(objectMapper.writeValueAsString(newPotluck), Potluck.class);
+
+        Mockito.when(potluckrepos.findById(10L))
+            .thenReturn(Optional.of(copyPotluck));
+
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
+        Potluck addPotluck = potluckService.update(newPotluck,
+            10);
+
+        assertNotNull(addPotluck);
+        assertEquals(newPotluck.getName(),
+            addPotluck.getName());
+
+    }
+
+    @Test (expected = ResourceNotFoundException.class)
+    public void updateNotFound() throws Exception
     {
         String potluckName = "Birthday Party";
         Potluck newPotluck = new Potluck();
@@ -228,7 +332,7 @@ public class PotluckServiceImplUnitTestNoDB
             .readValue(objectMapper.writeValueAsString(newPotluck), Potluck.class);
 
         Mockito.when(potluckrepos.findById(10L))
-            .thenReturn(Optional.of(copyPotluck));
+            .thenReturn(Optional.empty());
 
         Mockito.when(potluckrepos.save(any(Potluck.class)))
             .thenReturn(newPotluck);
@@ -254,10 +358,21 @@ public class PotluckServiceImplUnitTestNoDB
         assertEquals(5, potluckList.size());
     }
 
+    @Test(expected = ResourceNotFoundException.class)
+    public void deleteNotFound()
+    {
+        Mockito.when(potluckrepos.findById(any(Long.class)))
+            .thenReturn(Optional.empty());
+        Mockito.doNothing()
+            .when(potluckrepos).deleteById(any(Long.class));
+
+        potluckService.delete(2);
+        assertEquals(5, potluckList.size());
+    }
+
     @Test
     public void deleteAll()
     {
-        potluckrepos.deleteAll();
         Mockito.doNothing()
             .when(potluckrepos).deleteAll();
         potluckService.deleteAll();

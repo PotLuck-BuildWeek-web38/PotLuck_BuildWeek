@@ -18,7 +18,7 @@ public class DataSourceConfig
     /**
      * The property from application properties. Defaults to H2
      */
-    @Value("${local.db.run:h2}")
+    @Value("${local.run.db:h2}")
     private String dbValue;
 
     /**
