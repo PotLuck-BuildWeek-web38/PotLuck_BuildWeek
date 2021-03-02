@@ -223,32 +223,61 @@ public class PotluckServiceImplUnitTestNoDB
 
     }
 
-//    @Test
-//    public void saveNotFound()
-//    {
-//        String potluckName = "Birthday Party";
-//        Potluck newPotluck = new Potluck();
-//        newPotluck.setName(potluckName);
-//        newPotluck.setDate("March 14th");
-//        newPotluck.setTime("2 PM");
-//        newPotluck.setLocation("Malibu Jacks");
-//        newPotluck.setOrganizer("barnbarn");
-//        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
-//        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
-//
-//        Mockito.when(potluckrepos.findById(999L))
-//            .thenReturn(Optional.empty());
-//
-//        Mockito.when(userService.findUserById(any(Long.class)))
-//            .thenReturn(guestList.get(0));
-//
-//        Mockito.when(potluckrepos.save(any(Potluck.class)))
-//            .thenReturn(newPotluck);
-//
-//        Potluck addedPotluck = potluckService.save(newPotluck);
-//        assertEquals(newPotluck.getName(), addedPotluck.getName());
-//
-//    }
+    @Test (expected = ResourceNotFoundException.class)
+    public void saveNotFound()
+    {
+        String potluckName = "Birthday Party";
+        Potluck newPotluck = new Potluck();
+        newPotluck.setName(potluckName);
+        newPotluck.setDate("March 14th");
+        newPotluck.setTime("2 PM");
+        newPotluck.setLocation("Malibu Jacks");
+        newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
+        newPotluck.setPotluckid(999L);
+
+        Mockito.when(potluckrepos.findById(999L))
+            .thenReturn(Optional.empty());
+
+        Mockito.when(userService.findUserById(any(Long.class)))
+            .thenReturn(guestList.get(0));
+
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
+        Potluck addedPotluck = potluckService.save(newPotluck);
+        assertEquals(newPotluck.getName(), addedPotluck.getName());
+
+    }
+
+    @Test
+    public void savePutFound()
+    {
+        String potluckName = "Birthday Party";
+        Potluck newPotluck = new Potluck();
+        newPotluck.setName(potluckName);
+        newPotluck.setDate("March 14th");
+        newPotluck.setTime("2 PM");
+        newPotluck.setLocation("Malibu Jacks");
+        newPotluck.setOrganizer("barnbarn");
+        newPotluck.getItems().add(new Item("bananas", "barnbarn",false,newPotluck));
+        newPotluck.getUsers().add(new UserPotlucks( newPotluck, guestList.get(0)));
+        newPotluck.setPotluckid(999L);
+
+        Mockito.when(potluckrepos.findById(999L))
+            .thenReturn(Optional.of(potluckList.get(0)));
+
+        Mockito.when(userService.findUserById(any(Long.class)))
+            .thenReturn(guestList.get(0));
+
+        Mockito.when(potluckrepos.save(any(Potluck.class)))
+            .thenReturn(newPotluck);
+
+        Potluck addedPotluck = potluckService.save(newPotluck);
+        assertEquals(newPotluck.getName(), addedPotluck.getName());
+
+    }
 
     @Test
     public void update() throws Exception
