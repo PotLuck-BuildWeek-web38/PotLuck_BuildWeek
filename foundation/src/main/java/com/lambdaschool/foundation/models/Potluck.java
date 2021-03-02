@@ -1,6 +1,8 @@
 package com.lambdaschool.foundation.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -8,28 +10,55 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
+@ApiModel(value = "Potluck",
+    description = "A potluck event record")
 @Entity
 @Table(name="potlucks")
 public class Potluck extends Auditable
 {
+    @ApiModelProperty(name = "potluck id",
+    value = "primary key for potluck",
+    required = true,
+    example = "1")
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long potluckid;
 
+    @ApiModelProperty(name = "potluck name",
+        value = "name of potluck event",
+        required = true,
+        example = "Game Day Tailgate")
     @Column(nullable = false)
     private String name;
 
+    @ApiModelProperty(name = "potluck location",
+        value = "location of potluck event",
+        required = true,
+        example = "Commonwealth Stadium")
     @Column(nullable = false)
     private String location;
 
-//   Figure out right data type later, use as string temporarily
+    // Update this data type later, use as string temporarily
+    @ApiModelProperty(name = "potluck date",
+        value = "date of potluck event",
+        required = true,
+        example = "March 7th")
     @Column(nullable = false)
     private String date;
 
-  // Figure out right data type later, use as string temporarily
+  // Update this data type later, use as string temporarily
+    @ApiModelProperty(name = "potluck time",
+      value = "time of potluck event",
+      required = true,
+      example = "2 PM")
     @Column(nullable = false)
     private String time;
 
+    @ApiModelProperty(name = "potluck organizer",
+        value = "organizer of potluck event",
+        required = true,
+        example = "BarnBarn")
     @Column(nullable = false)
     private String organizer;
 
