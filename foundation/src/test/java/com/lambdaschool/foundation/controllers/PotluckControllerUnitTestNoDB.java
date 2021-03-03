@@ -313,4 +313,32 @@ public class PotluckControllerUnitTestNoDB
             .andExpect(status().isOk())
             .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+        public void getPotluckInfo() throws Exception
+    {
+        String apiUrl = "/potlucks/getpotluckinfo";
+        Mockito.when(potluckService.findPotlucksByOrganizer(any(String.class)))
+            .thenReturn(potluckList);
+
+        RequestBuilder rb = MockMvcRequestBuilders.get(apiUrl)
+            .accept(MediaType.APPLICATION_JSON);
+        MvcResult r = mockMvc.perform(rb)
+            .andReturn(); // this could throw an exception
+        String tr = r.getResponse()
+            .getContentAsString();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String er = mapper.writeValueAsString(potluckList);
+
+        System.out.println("Expect: " + er);
+        System.out.println("Actual: " + tr);
+
+        assertEquals("Rest API Returns List",
+            er,
+            tr);
+    }
+
+
+
 }

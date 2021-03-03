@@ -378,4 +378,12 @@ public class PotluckServiceImplUnitTestNoDB
         potluckService.deleteAll();
         assertEquals(5, potluckList.size());
     }
+
+    @Test
+    public void findPotlucksByOrganizer()
+    {
+        Mockito.when(potluckrepos.findByOrganizer(any(String.class)))
+            .thenReturn(potluckList);
+        assertEquals(5, potluckService.findPotlucksByOrganizer("cinnamon").size());
+    }
 }

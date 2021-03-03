@@ -27,7 +27,9 @@ import java.util.List;
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -102,6 +104,15 @@ public class PotluckControllerIntegrationTest
             .statusCode(404)
             .and()
             .body(containsString("Resource"));
+    }
+
+    @Test
+    public void getPotluckInfo() throws Exception
+    {
+        this.mockMvc.perform(get("/potlucks/getpotluckinfo"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andExpect(content().string(containsString("cinnamon")));
     }
 
     @Test
