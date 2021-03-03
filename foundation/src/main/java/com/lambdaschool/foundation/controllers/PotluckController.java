@@ -3,7 +3,9 @@ package com.lambdaschool.foundation.controllers;
 import com.lambdaschool.foundation.exceptions.ResourceNotFoundException;
 import com.lambdaschool.foundation.models.ErrorDetail;
 import com.lambdaschool.foundation.models.Potluck;
+import com.lambdaschool.foundation.models.User;
 import com.lambdaschool.foundation.services.PotluckService;
+import com.lambdaschool.foundation.services.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -12,12 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -26,6 +30,9 @@ public class PotluckController
 {
     @Autowired
     private PotluckService potluckService;
+
+    @Autowired
+    private UserService userService;
 
     @ApiOperation(value = "returns all Potlucks",
         response = Potluck.class,
@@ -142,5 +149,19 @@ public class PotluckController
     {
         potluckService.delete(potluckid);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "returns all potlucks organized by the currently authenticated user",
+        response = Potluck.class,
+        responseContainer = "List")
+    @GetMapping(value = "/getpotluckinfo",
+        produces = {"application/json"})
+    public ResponseEntity<?> getPotluckInfo(Authentication authentication)
+    {
+        List<Potluck> userPotlucks = new ArrayList<>();
+        String organizer = authentication.getName();
+        userPotlucks = potluckService.findPotlucksByOrganizer(organizer);
+        return new ResponseEntity<>(userPotlucks,
+            HttpStatus.OK);
     }
 }

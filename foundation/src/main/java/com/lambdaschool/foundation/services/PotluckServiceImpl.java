@@ -155,6 +155,15 @@ public class PotluckServiceImpl implements PotluckService
         return potluckrepos.save(currentPotluck);
     }
 
+    @Override
+    public List<Potluck> findPotlucksByOrganizer(String organizer)
+    {
+        List<Potluck> userPotlucks = new ArrayList<>();
+
+        userPotlucks = potluckrepos.findByOrganizer(organizer);
+        return userPotlucks;
+    }
+
     @Transactional
     @Override
     public void delete(long id) {

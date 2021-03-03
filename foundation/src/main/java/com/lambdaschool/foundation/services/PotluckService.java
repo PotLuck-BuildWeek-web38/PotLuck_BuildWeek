@@ -17,4 +17,6 @@ public interface PotluckService
     public void deleteAll();
 
     Potluck update(Potluck potluck,long id);
+
+    List<Potluck> findPotlucksByOrganizer(String organizer);
 }
