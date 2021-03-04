@@ -3,6 +3,7 @@
 ## Table of Contents
 
 - **[Overview](#overview)**<br>
+- **[Database Schema](#db-schema)**<br>
 - **[Project Setup](#project-setup)**<br>
 - **[Swagger Documentation](#swagger-documentation)**<br>
 - **[API Endpoints](#api-endpoints)**<br>
@@ -25,6 +26,10 @@ Potluck Planner is a full stack web application composed of a front end React SP
 [Potluck Planner Front End GitHub Repo](https://github.com/PotLuck-BuildWeek-web38/frontend)
 
 [Potluck Planner Back End BaseURL](https://potluck-tt11.herokuapp.com)
+
+## <a name="db-schema"></a>Database Schema
+
+![Image of Database Layout](tables.png)
 
 ## <a name="project-setup"></a>Project Setup
 
