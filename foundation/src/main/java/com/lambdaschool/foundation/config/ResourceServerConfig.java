@@ -53,6 +53,14 @@ public class ResourceServerConfig
                 "/webjars/**",
                 "/createnewuser")
             .permitAll()
+            .antMatchers(HttpMethod.GET,
+                "/potlucks/potlucks"
+            )
+            .permitAll()
+            .antMatchers(HttpMethod.GET,
+                "/potlucks/**"
+            )
+            .authenticated()
             .antMatchers(HttpMethod.POST,
                 "/users/**",
                 "/potlucks/**")
@@ -71,7 +79,7 @@ public class ResourceServerConfig
             .authenticated()
             .antMatchers("/users/**",
                 "/useremails/**",
-                "/potlucks/**",
+//                "/potlucks/potluck/**",
                 "/oauth/revoke-token",
                 "/logout")
             .authenticated()
