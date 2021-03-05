@@ -1,6 +1,9 @@
 package com.lambdaschool.foundation.controllers;
 
 import com.lambdaschool.foundation.FoundationApplicationTesting;
+import com.lambdaschool.foundation.models.Potluck;
+import com.lambdaschool.foundation.models.User;
+import com.lambdaschool.foundation.services.UserService;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import org.junit.After;
 import org.junit.Before;
@@ -18,6 +21,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertTrue;
@@ -38,15 +43,26 @@ public class UserControllerIntegrationTest
 
     private MockMvc mockMvc;
 
+    @Autowired
+    private UserService userService;
+
 
     @Before
     public void setUp() throws Exception
     {
         RestAssuredMockMvc.webAppContextSetup(webApplicationContext);
 
+        List<User> myUsers = userService.findAll();
+        for(User u : myUsers)
+        {
+            System.out.println(u.getUserid() + " " + u.getUsername());
+        }
+
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
             .apply(SecurityMockMvcConfigurers.springSecurity())
             .build();
+
+
     }
 
     @After
@@ -93,7 +109,7 @@ public class UserControllerIntegrationTest
                               Exception
     {
         this.mockMvc.perform(get("/users/user/{userid}",
-            4))
+            17))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(content().string(containsString("admin")));
@@ -150,7 +166,7 @@ public class UserControllerIntegrationTest
     public void givenPutAUser() throws
                                 Exception
     {
-        mockMvc.perform(MockMvcRequestBuilders.put("/users/user/11")
+        mockMvc.perform(MockMvcRequestBuilders.put("/users/user/20")
             .content("{\"username\": \"stumps\", \"password\": \"EATEATEAT\", \"primaryemail\" : \"stumps@home.local\"}")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))
@@ -163,7 +179,7 @@ public class UserControllerIntegrationTest
                                  Exception
     {
         mockMvc.perform(MockMvcRequestBuilders.delete("/users/user/{id}",
-            13))
+            21))
             .andDo(print())
             .andExpect(status().is2xxSuccessful());
     }
@@ -183,7 +199,7 @@ public class UserControllerIntegrationTest
                              Exception
     {
         mockMvc.perform(MockMvcRequestBuilders.patch("/users/user/{userid}",
-            7)
+            20)
             .content("{\"password\": \"EATEATEAT\"}")
             .contentType(MediaType.APPLICATION_JSON)
             .accept(MediaType.APPLICATION_JSON))

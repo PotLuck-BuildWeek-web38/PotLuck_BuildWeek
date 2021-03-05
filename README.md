@@ -148,7 +148,7 @@ Login an existing user:
 				localStorage.setItem('token', res.data.access_token);
 			})
 
-### All other routes require an authenticated user. The access_token must be included in the request header
+### All other routes, except for "potlucks/potlucks", require an authenticated user. The access_token must be included in the request header.
 
 Sample axiosWithAuth:
 
