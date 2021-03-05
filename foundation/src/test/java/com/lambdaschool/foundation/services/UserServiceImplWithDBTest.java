@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.List;
+
 import static junit.framework.TestCase.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
 
@@ -37,6 +39,11 @@ public class UserServiceImplWithDBTest
     public void setUp() throws Exception
     {
         MockitoAnnotations.initMocks(this);
+        List<User> users = userService.findAll();
+        for (User u : users)
+        {
+            System.out.println(u.getUserid() + " " + u.getUsername());
+        }
     }
 
     @After
@@ -48,7 +55,7 @@ public class UserServiceImplWithDBTest
     public void B_findUserById()
     {
         assertEquals("admin",
-            userService.findUserById(4)
+            userService.findUserById(17)
                 .getUsername());
     }
 
@@ -71,7 +78,7 @@ public class UserServiceImplWithDBTest
     @Test
     public void D_delete()
     {
-        userService.delete(13);
+        userService.delete(20);
         assertEquals(4,
             userService.findAll()
                 .size());
@@ -114,7 +121,7 @@ public class UserServiceImplWithDBTest
     public void F_save()
     {
         Role r2 = new Role("user");
-        r2.setRoleid(2);
+        r2.setRoleid(1);
 
         User u2 = new User("tiger",
             "ILuvMath!",
@@ -142,7 +149,7 @@ public class UserServiceImplWithDBTest
     public void FA_saveputnotfound()
     {
         Role r2 = new Role("user");
-        r2.setRoleid(2);
+        r2.setRoleid(1);
 
         User u2 = new User("tiger",
             "ILuvMath!",
@@ -171,7 +178,7 @@ public class UserServiceImplWithDBTest
     public void FA_saveputfound()
     {
         Role r2 = new Role("user");
-        r2.setRoleid(2);
+        r2.setRoleid(1);
 
         User u2 = new User("mojo",
             "ILuvMath!",
@@ -182,7 +189,7 @@ public class UserServiceImplWithDBTest
         u2.getUseremails()
             .add(new Useremail(u2,
                 "mojo@corgi.local"));
-        u2.setUserid(4);
+        u2.setUserid(19);
 
         User saveU2 = userService.save(u2);
 
@@ -203,7 +210,7 @@ public class UserServiceImplWithDBTest
             .thenReturn(true);
 
         Role r2 = new Role("user");
-        r2.setRoleid(2);
+        r2.setRoleid(1);
 
         User u2 = new User("cinnamon",
             "password",
@@ -223,7 +230,7 @@ public class UserServiceImplWithDBTest
                 "bunny@email.thump"));
 
         User updatedu2 = userService.update(u2,
-            7);
+            18);
 
         System.out.println("*** DATA ***");
         System.out.println(updatedu2);
@@ -236,44 +243,44 @@ public class UserServiceImplWithDBTest
                 .get(checking)
                 .getUseremail());
     }
-
-    @Test(expected = ResourceNotFoundException.class)
-    public void GB_updateNotCurrentUserNorAdmin()
-    {
-        Role r2 = new Role("user");
-        r2.setRoleid(2);
-
-        User u2 = new User("cinnamon",
-            "password",
-            "cinnamon@school.lambda");
-        u2.getRoles()
-            .add(new UserRoles(u2,
-                r2));
-        u2.getUseremails()
-            .add(new Useremail(u2,
-                "cinnamon@mymail.thump"));
-        u2.getUseremails()
-            .add(new Useremail(u2,
-                "hops@mymail.thump"));
-        u2.getUseremails()
-            .add(new Useremail(u2,
-                "bunny@email.thump"));
-
-        Mockito.when(helperFunctions.isAuthorizedToMakeChange(anyString()))
-            .thenReturn(false);
-
-        User updatedu2 = userService.update(u2,
-            8);
-
-        System.out.println("*** DATA ***");
-        System.out.println(updatedu2);
-        System.out.println("*** DATA ***");
-
-        int checking = updatedu2.getUseremails()
-            .size() - 1;
-        assertEquals("bunny@email.thump",
-            updatedu2.getUseremails()
-                .get(checking)
-                .getUseremail());
-    }
+// Not applicable for our application, only one user type
+//    @Test(expected = ResourceNotFoundException.class)
+//    public void GB_updateNotCurrentUserNorAdmin()
+//    {
+//        Role r2 = new Role("user");
+//        r2.setRoleid(1);
+//
+//        User u2 = new User("cinnamon",
+//            "password",
+//            "cinnamon@school.lambda");
+//        u2.getRoles()
+//            .add(new UserRoles(u2,
+//                r2));
+//        u2.getUseremails()
+//            .add(new Useremail(u2,
+//                "cinnamon@mymail.thump"));
+//        u2.getUseremails()
+//            .add(new Useremail(u2,
+//                "hops@mymail.thump"));
+//        u2.getUseremails()
+//            .add(new Useremail(u2,
+//                "bunny@email.thump"));
+//
+//        Mockito.when(helperFunctions.isAuthorizedToMakeChange(anyString()))
+//            .thenReturn(false);
+//
+//        User updatedu2 = userService.update(u2,
+//            21);
+//
+//        System.out.println("*** DATA ***");
+//        System.out.println(updatedu2);
+//        System.out.println("*** DATA ***");
+//
+//        int checking = updatedu2.getUseremails()
+//            .size() - 1;
+//        assertEquals("bunny@email.thump",
+//            updatedu2.getUseremails()
+//                .get(checking)
+//                .getUseremail());
+//    }
 }

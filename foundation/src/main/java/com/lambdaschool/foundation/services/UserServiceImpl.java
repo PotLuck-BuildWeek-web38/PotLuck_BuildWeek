@@ -142,10 +142,11 @@ public class UserServiceImpl
         User user,
         long id)
     {
-        User currentUser = findUserById(id);
+        User currentUser = userrepos.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("User id " + id + "Not Found"));
 
-        if (helperFunctions.isAuthorizedToMakeChange(currentUser.getUsername()))
-        {
+//        if (helperFunctions.isAuthorizedToMakeChange(currentUser.getUsername()))
+//        {
             if (user.getUsername() != null)
             {
                 currentUser.setUsername(user.getUsername()
@@ -193,12 +194,12 @@ public class UserServiceImpl
             }
 
             return userrepos.save(currentUser);
-        } else
-        {
-            // note we should never get to this line but is needed for the compiler
-            // to recognize that this exception can be thrown
-            throw new OAuth2AccessDeniedException();
-        }
+//        } else
+//        {
+//            // note we should never get to this line but is needed for the compiler
+//            // to recognize that this exception can be thrown
+//            throw new OAuth2AccessDeniedException();
+//        }
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
