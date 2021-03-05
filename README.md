@@ -118,8 +118,8 @@ Custom swagger API documentation was generated using swagger annotations on java
 
 | Method        | Endpoint           | Body (required)                       | Body (optional) | Notes                                             |
 | ------------- | ------------------ | ------------------------------------- | --------------- | ------------------------------------------------- |
-| register POST | /api/createnewuser | username, password, primaryemail | N/A             | Creates a new user object in the database, logs in user, returns an access_token for authentication        |
-| login POST    | /api/login    | username, password                    | N/A             | Returns an access_token for authentication |
+| register POST | /createnewuser | username, password, primaryemail | N/A             | Creates a new user object in the database, logs in user, returns an access_token for authentication        |
+| login POST    | /login    | username, password                    | N/A             | Returns an access_token for authentication |
 
 ### **_OAUTH Authentication Sample POST Requests_**
 
@@ -169,40 +169,40 @@ Sample axiosWithAuth:
 
 | Method                        | Endpoint                           | Body (required) | Body (optional) | Notes                                                            |
 | ------------- | ------------------ | ------------------------------------- | --------------- | ------------------------------------------------- |
-| get user GET    | /api/users/getuserinfo  | N/A             | N/A             | Fetches authenticated user      |
-| get all users GET  | /api/users/users | N/A             | N/A             | Fetches all users                  |
-| get user by userid GET   | /api/users/user/:userid  | N/A       | N/A             | Fetches user by userid  |
-| get user by username GET  | /api/users/user/name/:username  | N/A       | N/A             | Fetches user by username |
-| get user by like username GET | /api/users/user/name/like/:subname | N/A        | N/A             | Fetches users with subname in username |
-| add a new user POST  | /api/users/user    | username, primaryemail, password | potlucks  | Adds a new user  |
-| update a full user PUT | /api/users/user/:userid | username, primaryemail, password   | N/A             | Updates entire user |
-| update a user with partial info PATCH   | /api/users/user/:userid   | username, primaryemail, password | potluck      | Updates the user  |
-| delete user by userid DELETE | /api/users/user/:userid | N/A     | N/A    | Deletes the user               |
+| get user GET    | /users/getuserinfo  | N/A             | N/A             | Fetches authenticated user      |
+| get all users GET  | /users/users | N/A             | N/A             | Fetches all users                  |
+| get user by userid GET   | /users/user/:userid  | N/A       | N/A             | Fetches user by userid  |
+| get user by username GET  | /users/user/name/:username  | N/A       | N/A             | Fetches user by username |
+| get user by like username GET | /users/user/name/like/:subname | N/A        | N/A             | Fetches users with subname in username |
+| add a new user POST  | /users/user    | username, primaryemail, password | potlucks  | Adds a new user  |
+| update a full user PUT | /users/user/:userid | username, primaryemail, password   | N/A             | Updates entire user |
+| update a user with partial info PATCH   | /users/user/:userid   | username, primaryemail, password | potluck      | Updates the user  |
+| delete user by userid DELETE | /users/user/:userid | N/A     | N/A    | Deletes the user               |
 
 ### **_Endpoints for the Potlucks_**
 
 | Method                        | Endpoint                           | Body (required) | Body (optional) | Notes                                                            |
 | ------------- | ------------------ | ------------------------------------- | --------------- | ------------------------------------------------- |
-| get all potlucks GET | /api/potlucks/potlucks  | N/A           | N/A             | Fetches all potlucks   |
-| get all potlucks organized by user GET | /api/potlucks/getpotluckinfo  | N/A             | N/A             | Fetches potlucks organized by user |
-| get potluck by potluckid GET | /api/potlucks/potluck/:potluckid  | N/A       | N/A             | Fetches potluck   |
-| add a new potluck POST | /api/potlucks/potluck       | name, organizer, location, date, time | items, users | Adds potluck  |
-| update a full potluck PUT | /api/potlucks/potluck/:potluckid | name, organizer, location, date, time | items, users| Updates the potluck |
-| delete potluck by potluckid DELETE | /api/potlucks/potluck/:potluckid | N/A           | N/A             | Deletes the potluck  |
+| get all potlucks GET | /potlucks/potlucks  | N/A           | N/A             | Fetches all potlucks   |
+| get all potlucks organized by user GET | /potlucks/getpotluckinfo  | N/A             | N/A             | Fetches potlucks organized by user |
+| get potluck by potluckid GET | /potlucks/potluck/:potluckid  | N/A       | N/A             | Fetches potluck   |
+| add a new potluck POST | /potlucks/potluck       | name, organizer, location, date, time | items, users | Adds potluck  |
+| update a full potluck PUT | /potlucks/potluck/:potluckid | name, organizer, location, date, time | items, users| Updates the potluck |
+| delete potluck by potluckid DELETE | /potlucks/potluck/:potluckid | N/A           | N/A             | Deletes the potluck  |
 
 ### **_Endpoints for Items_**
 
 | Method                        | Endpoint                           | Body (required) | Body (optional) | Notes                                                            |
 | ------------- | ------------------ | ------------------------------------- | --------------- | ------------------------------------------------- |
-| get all items GET | /api/potlucks/item   | N/A             | N/A             | Fetches all items  |
-| get item by itemid  GET | /api/potlucks/item/:itemid | N/A           | N/A             | Fetches an item |
-| update item by itemid PATCH | /api/potlucks/updateitem/:itemid  | N/A       | guest, name, picked, potluck | Updates item |
-| deletes an item by itemid DELETE | /api/potlucks/item/:itemid      | N/A           | N/A        | Deletes item    |
+| get all items GET | /potlucks/item   | N/A             | N/A             | Fetches all items  |
+| get item by itemid  GET | /potlucks/item/:itemid | N/A           | N/A             | Fetches an item |
+| update item by itemid PATCH | /potlucks/updateitem/:itemid  | N/A       | guest, name, picked, potluck | Updates item |
+| deletes an item by itemid DELETE | /potlucks/item/:itemid      | N/A           | N/A        | Deletes item    |
 
 ### **_Endpoints for Guests_**
 
 | Method                        | Endpoint                           | Body (required) | Body (optional) | Notes                                                            |
 | ------------- | ------------------ | ------------------------------------- | --------------- | ------------------------------------------------- |
-| get all user guests GET | /api/potlucks/potluck/:potluckid/guests | N/A       | N/A     | Fetches all users/guests |
-| add user as guest  POST | /api/potlucks/potluck/:potluckid/addguest/:userid | N/A       | N/A        | Adds user to potluck |
-| remove user as guest DELETE | /api/potlucks/potluck/:potluckid/removeguest/:userid  | N/A       | N/A    | Deletes the user from potluck |
+| get all user guests GET | /potlucks/potluck/:potluckid/guests | N/A       | N/A     | Fetches all users/guests |
+| add user as guest  POST | /potlucks/potluck/:potluckid/addguest/:userid | N/A       | N/A        | Adds user to potluck |
+| remove user as guest DELETE | /potlucks/potluck/:potluckid/removeguest/:userid  | N/A       | N/A    | Deletes the user from potluck |
